@@ -11,7 +11,11 @@
 #macro ( banner $banner $id )
   #if ( $banner )
     #if( $banner.href )
-      <a href="$banner.href" id="$id" #if( $banner.alt ) title="$banner.alt" #end >
+      #if( $banner.href.isEmpty() )
+        <a href="http://www.cismet.de" id="$id" #if( $banner.alt ) title="$banner.alt" #end >
+      #else
+        <a href="$banner.href" id="$id" #if( $banner.alt ) title="$banner.alt" #end >
+      #end
     #else
         <div id="$id">
     #end
@@ -287,9 +291,11 @@
               #set ( $img = $img.replaceAll( "\\", "/" ) )
 
               ## workaround to trick site generation about the image location
-              #if ( ! $title.toLowerCase().startsWith("charon framework") )
+              #if ( $title.toLowerCase().contains("What") )
                 #if ( $href.equals("http://www.smhi.se/sudplan") )
-                  #set ( $img = "images/sudplan_logo.png" )
+                  #set ( $img = "../images/sudplan_logo.png" )
+                #else
+                  #set ( $img = "./images/sudplan_logo.png" )
                 #end
               #end
               <img  class="poweredBy"
